@@ -1,19 +1,21 @@
-import { GitHubBanner, Refine, WelcomePage } from "@refinedev/core";
+import { GitHubBanner, Refine } from "@refinedev/core";
 import { DevtoolsPanel, DevtoolsProvider } from "@refinedev/devtools";
 import { RefineKbar, RefineKbarProvider } from "@refinedev/kbar";
 import { GraphQLClient } from "@refinedev/nestjs-query";
 import { useNotificationProvider } from "@refinedev/antd";
 import "@refinedev/antd/dist/reset.css";
-
+import { Authenticated } from "@refinedev/core";
 import { dataProvider, liveProvider, authProvider } from "./providers";
 import { Home, ForgotPassword, Login, Register,  } from "./pages"
+import  Layout  from "./components/layout"
 import routerBindings, {
+  CatchAllNavigate,
   DocumentTitleHandler,
   UnsavedChangesNotifier,
 } from "@refinedev/react-router";
-import { App as AntdApp } from "antd";
+import { App as AntdApp, } from "antd";
 import { createClient } from "graphql-ws";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { BrowserRouter, Route, Routes, Outlet } from "react-router";
 
 
 
@@ -46,11 +48,26 @@ function App() {
                 }}
               >
                 <Routes>
-                  <Route index element={<WelcomePage />} />
-                  <Route index element ={<Home />} />
+                  
+                  
                   <Route path="/login" element={<Login />} />
                   <Route path="/register" element={<Register />} />
                   <Route path="/forgot-password" element={<ForgotPassword />} />
+                  <Route
+                  element={
+                  <Authenticated
+                  key="authenticated-layout"
+                  fallback={<CatchAllNavigate to="/login" />}
+                  >
+                    
+                      
+                     <Layout>
+                          <Outlet />
+                     </Layout>
+                      </Authenticated> 
+                      }>
+                      <Route index element={<Home />} />
+                    </Route>
                 </Routes>
                 <RefineKbar />
                 <UnsavedChangesNotifier />

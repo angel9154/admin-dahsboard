@@ -1,7 +1,0 @@
-.my-popover-overlay {
-    z-index: 9999; /* Your original overlayStyle's zIndex */
-  }
-  
-  .my-popover-inner {
-    padding: 0;      /* Your original overlayInnerStyle's padding */
-  }
