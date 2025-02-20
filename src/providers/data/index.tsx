@@ -6,7 +6,7 @@ import { createClient } from "graphql-ws";
 
 export const API_BASE_URL = 'https://api.crm.refine.dev/graphql'
 export const WS_URL = 'wss://api.crm.refine.dev/graphql';
-export const API_URL = 'https://api.crm.refine.dev';
+export const API_URL = `${API_BASE_URL}/graphql`;
 
 // this block of code created a custom fetching mechanisym
 export const client = new GraphQLClient(API_URL, {
@@ -19,7 +19,7 @@ export const client = new GraphQLClient(API_URL, {
     }
 });
 // this block of code creates a websocket client 
-export const wsClient = typeOf window !== "undefined"
+export const wsClient = typeof window !== "undefined"
  ? createClient({
     url: WS_URL,
     connectionParams: () => {
@@ -34,4 +34,4 @@ export const wsClient = typeOf window !== "undefined"
  : undefined
 
  export const dataProvider = graphqlDataProvider(client);
- export const liveProvider = graphqlDataProvider(wsClient) : undefined;
+ export const liveProvider = wsClient ? graphqlDataProvider(wsClient) : undefined;
