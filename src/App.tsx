@@ -16,6 +16,7 @@ import routerBindings, {
 import { App as AntdApp, } from "antd";
 import { createClient } from "graphql-ws";
 import { BrowserRouter, Route, Routes, Outlet } from "react-router";
+import { resources } from "./config/resources";
 
 
 
@@ -39,6 +40,7 @@ function App() {
                 notificationProvider={useNotificationProvider}
                 routerProvider={routerBindings}
                 authProvider={authProvider}
+                resources={resources}
                 options={{
                   syncWithLocation: true,
                   warnWhenUnsavedChanges: true,
